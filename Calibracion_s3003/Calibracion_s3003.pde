@@ -1,12 +1,16 @@
+#include <SoftwareServo.h>
+
+SoftwareServo servo1;
+
 void setup()
 {
-  pinMode(9, OUTPUT);
+  pinMode(13,OUTPUT);
+  servo1.attach(9);
 }
 
 void loop()
 {
-  digitalWrite(9, HIGH);
-  delayMicroseconds(150); // Approximately 10% duty cycle @ 1KHz
-  digitalWrite(9, LOW);
-  delayMicroseconds(1000 - 150);
+
+servo1.write(90);
+  SoftwareServo::refresh();
 }
