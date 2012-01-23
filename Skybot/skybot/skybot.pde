@@ -21,29 +21,14 @@ void loop()
     Serial.println(distancia);
   }
 	loop_cnt++;
-    if (distancia == sp )
+    if (distancia >= sp )
     {
-		orden = 0;	//quieto
-    }else if(distancia > sp ){
-		orden = 1; //avanzar
-    }else if(distancia < sp ){
-		orden = 2; //retroceder
-	}	
-switch (orden){
-	case 0:
-		//Serial.println("quieto");
-		break;
-
-	case 1:
-		//Serial.println("avance");
 		throttle(-100,-100);
-		
-		break;
-	case 2: 
-		//Serial.println("retroceso");
+
+    }else {
 		throttle(-100,0);
-		break;
-}
+		
+    }
 
 
 }
