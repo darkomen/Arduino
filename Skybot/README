@@ -1,4 +1,2 @@
-Dentro de la carpeta Skybot la carpeta que funciona es 'Skybot' las carpetas con V1 y V2 no funcionan o son proyectos futuros.
-
-Para que el programa funcione es necesario isntalar la libreria Ultrasonic.
+Para que el programa funcione es necesario instalar la libreria Ultrasonic.
 Para instalarla es necesario ver la carpeta de Sketcbox que está configurada en arduino (Archivo>Preferencias)
