@@ -6,6 +6,7 @@ void setup()
 {
   pinMode(13,OUTPUT);
   servo1.attach(9);
+  servo1.setMaximumPulse(2040);
 }
 
 void loop()
