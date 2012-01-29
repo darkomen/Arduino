@@ -6,6 +6,8 @@ El programa Interruptor, lo único que hace es aumentar el valor de una variable
 
 El programa potenciometro. va modificando el valor que se le manda al motor desde 0 a 180, por lo tanto tenemos una inversión de giro y un control de velocidad.
 
+El programa i2c, es igual que el programa potenciometro, pero con comunicaciones i2c, en la placa master está conectado el potenciometro y en el programa slave únicamente el servo.
+
 
 El servo utilizado está trucado para que al mandar la posición de 90º esté quieto, un valor de 0º hará girar en sentido contrario a las agujas del reloj y por último 180º sentido de las agujas del reloj.
 
