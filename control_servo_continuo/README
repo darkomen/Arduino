@@ -1,11 +1,12 @@
 Programa con diferentes estados del control de un servo.
-Hace uso de la libreria Button, para tener un control más preciso de los estados del botón. Incluida en el respositorio, es necesario instalar la liberia en el sketchfolder de arduino(file>preferences)
 
-La liberia button tiene una función para cada estado del botón, bastante potente a la hora de configurar distintos estados. Ver Ejemplos.
+La liberia button tiene una función para cada estado del botón, bastante potente a la hora de configurar distintos estados. Ver Ejemplos. La librería button es necesaria instalarla en el sketchfolder( Ver preferencias de arduino)
+
+El programa Interruptor, lo único que hace es aumentar el valor de una variable de 0 a 2 y en función del valor que tome manda una señal al motor, para que esté parado, e invierta el sentido de giro.
+
+El programa potenciometro. va modificando el valor que se le manda al motor desde 0 a 180, por lo tanto tenemos una inversión de giro y un control de velocidad.
+
 
 El servo utilizado está trucado para que al mandar la posición de 90º esté quieto, un valor de 0º hará girar en sentido contrario a las agujas del reloj y por último 180º sentido de las agujas del reloj.
-
-El programa Control_servo, lo único que hace es aumentar el valor de una variable de 0 a 2 y en función del valor que tome manda una señal al motor, para que esté parado, e invierta el sentido de giro.
-
 
 Repositorio Libreria Button: http://wiring.uniandes.edu.co/source/trunk/wiring/firmware/libraries/Button/

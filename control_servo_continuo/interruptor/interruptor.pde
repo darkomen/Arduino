@@ -23,7 +23,7 @@ void setup()
   Serial.begin(9800);
   pinMode(WLED,OUTPUT);
   motor.attach(8);
-  motor.setMaximumPulse(2400);   //centraliza el servo por software
+  motor.setMaximumPulse(2040);   //centraliza el servo por software
   button.clickHandler(handleButtonClickEvents);
 }
 
