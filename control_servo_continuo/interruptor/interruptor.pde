@@ -1,7 +1,7 @@
-#include <SoftwareServo.h> //incluimos libreria Servo
+#include <Servo.h> //incluimos libreria Servo
 #include <Button.h>        //incluimos libreria bot´n
 #define WLED 13            //definimos el pin del led
-SoftwareServo motor;       //declaramos objeto motor
+Servo motor;       //declaramos objeto motor
 
 //declaramos objeto boton(PIN,CONFIGURACION)
 Button button = Button(12,BUTTON_PULLUP_INTERNAL);
@@ -23,7 +23,7 @@ void setup()
   Serial.begin(9800);
   pinMode(WLED,OUTPUT);
   motor.attach(8);
-  motor.setMaximumPulse(2040);   //centraliza el servo por software
+  //motor.setMaximumPulse(2040);   //centraliza el servo por software
   button.clickHandler(handleButtonClickEvents);
 }
 
@@ -46,5 +46,5 @@ switch(caso){
   caso = 0;          //Reseteamos estado
 }
   
-SoftwareServo::refresh();  //Actualizamos estado motor.
+//SoftwareServo::refresh();  //Actualizamos estado motor.
 }
