@@ -2,7 +2,7 @@
 
 Servo izquierda;
 Servo derecha;
-int accion;
+int accion = 'q';
 void setup()
 {
   pinMode(13,OUTPUT);
@@ -14,30 +14,31 @@ void setup()
 
 void loop()
 {
+  
   while ( Serial.available()>0){
     //delay(10);
     accion=Serial.read();
    
   switch (accion) {
   case 'w':    // your hand is on the sensor
-    izquierda.write(0);
-    derecha.write(180);
+   izquierda.writeMicroseconds(1350-200);
+   derecha.writeMicroseconds(1330+200);
     break;
   case 'a':    // your hand is close to the sensor
-    izquierda.write(81.23455);
-    derecha.write(180);
+   izquierda.writeMicroseconds(1350);
+   derecha.writeMicroseconds(1330+200);
     break;
   case 'd':    // your hand is a few inches from the sensor
-    izquierda.write(0);
-    derecha.write(78.4632);
+    izquierda.writeMicroseconds(1350-200);
+    derecha.writeMicroseconds(1330);
     break;
   case 's':    // your hand is nowhere near the sensor
-    derecha.write(0);
-    izquierda.write(180);
+    izquierda.writeMicroseconds(1350+200);
+    derecha.writeMicroseconds(1330-200);
     break;
    case 'q':
-   izquierda.write(81.23455);
-   derecha.write(78.4632);
+   izquierda.writeMicroseconds(1350);
+   derecha.writeMicroseconds(1330);
    break;
    //default:
    //izquierda.write(81.23455);
@@ -45,7 +46,9 @@ void loop()
   } 
     
   }
-   //izquierda.write(81.23455);
-   //derecha.write(78.4632);
+  
+
+   //izquierda.writeMicroseconds(1350);
+   //derecha.writeMicroseconds(1330);
    
 }
