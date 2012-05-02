@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello" />
+
+    <Button
+        android:id="@+id/adelante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Adelante" />
+
+    <Button
+        android:id="@+id/derecha"
+        android:layout_width="wrap_content"
+        android:layout_height="99dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/adelante"
+        android:layout_marginRight="19dp"
+        android:text="@string/Derecha" />
+
+    <Button
+        android:id="@+id/izquierda"
+        android:layout_width="wrap_content"
+        android:layout_height="136dp"
+        android:layout_alignBottom="@+id/derecha"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/adelante"
+        android:layout_marginLeft="20dp"
+        android:text="@string/Izquierda" />
+
+    <Button
+        android:id="@+id/atras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/adelante"
+        android:layout_below="@+id/izquierda"
+        android:text="@string/Detras" />
+
+    <Button
+        android:id="@+id/paro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/atras"
+        android:layout_marginTop="56dp"
+        android:text="@string/Paro" />
+
+</RelativeLayout>

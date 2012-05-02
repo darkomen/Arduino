@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, SkybotActivity!</string>
+    <string name="app_name">Skybot</string>
+    <string name="Adelante">Adelante</string>
+    <string name="Detras">Detras</string>
+    <string name="Izquierda">Izquierda</string>
+    <string name="Derecha">Derecha</string>
+    <string name="Paro">paro</string>
+
+</resources>
