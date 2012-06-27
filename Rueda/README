@@ -1,4 +1,6 @@
-Librería Rueda:
-V1.0
-Primera versión de la librería rueda.Se usa para controlar de forma más facil un robot con dos ruedas de tracción.
+//-----------------
+//-- Librería Rueda V1.0
+//-- Santiago López Pina, Junio 2012
+//
+Librería rueda, simplifica el uso de la programación con servos trucados para que giren 360º. Ver el ejemplo Rueda.pde para más información sobre el uso de la librería.
 
