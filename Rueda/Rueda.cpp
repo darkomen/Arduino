@@ -17,42 +17,18 @@ void Rueda::attach(int pin,unsigned int center,bool type)
     _type = type;
 }
 //--------------------------
-//__ Función direcction: hacemos que el motor se mueva hacía delante o atrás en función
-//__ de si es el motor de la derecha o la izquierda.
-//__ 0-> Adelante
-//__ 1-> Parado
-//__ 2-> Detras
+//__ Función move: Le indicamos una escala del -10 al 10 y el motor girará en funcion de la escala.
 //__
 //--------------------------
-void Rueda::set_direcction(int dir)
+void Rueda::set_move(int dir)
 {
 	_dir = dir;
 
-	    switch (_dir) {
-        case 0:
                 if (_type == 0){
-                    _servo.writeMicroseconds(_center*-2);
+                    _servo.writeMicroseconds(map(_dir,-10,10,_center+500,_center-500));
 
                 } else if (_type == 1){
-                    _servo.writeMicroseconds(_center*+2);
-                }
-                        break;
-        case 1: 
-                if (_type == 0){
-                    _servo.writeMicroseconds(_center);
-                        
-                } else if (_type == 1){
-                    _servo.writeMicroseconds(_center);
-                }
-            break;
-        case 2:   
-                if (_type == 0){
-                    _servo.writeMicroseconds(_center*2);
                     
-                } else if (_type == 1){
-                    _servo.writeMicroseconds(_center*-2);
+					_servo.writeMicroseconds(map(_dir,-10,10,_center-500,_center+500));
                 }
-        break;
-    }
-     
 }

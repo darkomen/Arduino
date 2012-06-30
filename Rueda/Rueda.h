@@ -9,7 +9,7 @@ class Rueda
 public: 
     Rueda(){};
     void attach(int pin,unsigned int center,bool type);
-    void set_direcction(int dir);
+    void set_move(int dir);
     
     
 private:

@@ -13,18 +13,13 @@ nombre.attach(pin,center,tipo)
 	center: Valor númerico para el cual, el servo se detiene.
 	tipo: Motor a la izquierda (0) o a la derecha (1) del robot.
 */
-izquierda.attach(8,1385,0);
+izquierda.attach(8,1600,1);
 Serial.begin(9600);
   
 }
 
 void loop(){
-/*
-Accionamiento del motor:
-	0: adelante.
-	1: parado.
-	2: detras.
-*/	
-    izquierda.set_direcction(0); 
+	//Valor desde -10 a 10 para indicar la velocidad de movimiento de la rueda.
+    izquierda.set_move(10); 
 }
 
