@@ -18,19 +18,6 @@ void Robot::motores(int pin_iz, int center_iz,int pin_dch,int center_dch)
 void Robot::mover(int dir)
 {
 	_dir = dir;
-    switch (_dir) {
-        case 0:
-            _izquierda.set_direcction(0); 
-            _derecha.set_direcction(0); 
-            break;
-        case 1: 
-            _izquierda.set_direcction(1); 
-            _derecha.set_direcction(1);
-            break;
-        case 2:   
-            _izquierda.set_direcction(2); 
-            _derecha.set_direcction(2); 
-            break;
-    }
-    
+            _izquierda.set_move(_dir); 
+            _derecha.set_move(_dir);
 }

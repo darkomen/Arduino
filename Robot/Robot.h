@@ -9,12 +9,6 @@
 #include <Servo.h>
 #include <Rueda.h>
 //-- Constantes usadas para facilitar la sintaxis del programa
-const int adelante = 0;
-const int parado = 1;
-const int detras = 2;
-const int izquierda = 3;
-const int derecha = 4;
-
 class Robot
 {
     
