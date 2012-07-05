@@ -20,7 +20,7 @@ public:
     void motores(int pin_iz, int center_iz,int pin_dch,int center_dch);
     // nomber.mover(x);
     //  - mandamos mover al motor.
-    void mover(int dir);
+    void mover(int lineal, int angular);
     
 //Variables internas de la librería.
 private:
@@ -30,6 +30,9 @@ private:
     int _pin_iz;
     int _center_dch;
     int _pin_dch;
-    int _dir;
+    int _lineal;
+	int _angular;
+    int v_right;
+    int v_left;
 };
 #endif
