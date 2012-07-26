@@ -23,7 +23,11 @@ void Rueda::attach(int pin,unsigned int center,bool type)
 void Rueda::set_move(int dir)
 {
 	_dir = dir;
-
+			if (_dir == 0){
+				_servo.detach();
+			}
+			else{
+				_servo.attach(_pin);
                 if (_type == 0){
                     _servo.writeMicroseconds(map(_dir,-10,10,_center+500,_center-500));
 
@@ -31,4 +35,5 @@ void Rueda::set_move(int dir)
                     
 					_servo.writeMicroseconds(map(_dir,-10,10,_center-500,_center+500));
                 }
+			}
 }
