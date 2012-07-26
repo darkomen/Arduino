@@ -1,24 +1,24 @@
 #include <Servo.h>
 
-Servo servo1;
-int derecha = 180;
-int izquierda = 0;
-int parado = 90;
+Servo motor1;
+struct rueda{
+	int pin;
+	int st; //-- Analog (0) or ultrasonic (PING) (1)
+	};
+typedef struct rueda rueda;
+
+//-- Define the sensors:
+#define NUM_SENSOR 1
+
+rueda izquierda = 
+	{8, 1315}
+;
 void setup()
 {
-  pinMode(13,OUTPUT);
-  servo1.attach(9);  
-  Serial.begin(9600);
+  motor1.attach(izquierda.pin);
+  
 }
-
 void loop()
 {
- servo1.write(derecha);
-delay(5000);
-servo1.write(izquierda);
-delay(5000);
-servo1.write(parado);
-delay(5000);
-
- 
+ motor1.writeMicroseconds(izquierda.st*1);
 }

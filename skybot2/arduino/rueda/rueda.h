@@ -1,25 +1,36 @@
-class rueda 
+#ifndef Rueda_h
+#define Rueda_h
+
+
+class Rueda 
 {
   public:
   
     //-- Constructor
-    rueda();
+    Rueda();
     
     //-- Add a new servo to the worm. It should be done
     //-- during the Setup
     void add_servo(int pin, bool rev=false);
-    
-    //-- Assign a "wave" to the worm
-    void set_stop(Wave w, int servo = -1);
-    
+
     //-- Set the amplitude (deg)
-    void set_dir(unsigned int D, int servo  = -1);
+    void set_stop(unsigned int D, int servo  = -1);
     
+
     
     //-- Update the worm state. This method should be
     //-- called periodically from the main loop() function
     void refresh();
- 
+    
+    
+  private:
+    //-- Number of servos in the robot
+    int _nservo
+    //-- Current initial phase
+    int _stop;
+    
+    //-- Current phase difference
+    int _direction;
 };
 
 #endif
