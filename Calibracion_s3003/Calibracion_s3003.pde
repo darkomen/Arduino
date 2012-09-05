@@ -1,3 +1,4 @@
+//Ficheros para calibrar el servo de rotación continua.
 #include <Servo.h>
 
 Servo motor1;
