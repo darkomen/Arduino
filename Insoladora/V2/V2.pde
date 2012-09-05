@@ -11,39 +11,35 @@
 //#### OBJETOS ####
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 Tone sonido;                      // Objeto de altavoz
+Button botonUno = Button(2,BUTTON_PULLDOWN ); // OBjeto botonUno
+Button botonDos = Button(3,BUTTON_PULLDOWN ); // Objeto botonDos
+Button botonTres = Button(4,BUTTON_PULLDOWN );// Objeto botonTres
 //#### FIN OBJETOS ####
 
 //#### DEFINICIONES ####
 #define borraLCD  lcd.clear();                  // Define de la funcion clear() del LCD
 #define situaCero lcd.setCursor(0,0);           // Define de la funcion setCursor() del LCD
-#define led 13                            // Led de estado
-#define botonUno 2                        // Pin donde esta conectado el boton uno
-#define botonDos 3                        // Pin donde esta conectado el boton dos
-#define botonTres 4                       // Pin donde esta conectado el boton tres
-#define insoladora 5                      // Pin donde esta conectado el circuito de la insoladora
-#define altavoz 6                         // Pin donde esta conectado el altavoz
+#define led 13
+#define insoladora 5
+#define altavoz 6
 //#### FIN DEFINICIONES ####
 
 //#### VARIABLES ####
-byte seleccion = 0;                       // Almacena la seleccion realizada
-byte estado = 0, ultimoestado = 0;        // Variables para el control de los pulsadores
-int temp = 0;                             // Variable temporal para configurar retardo insolacion
-int temporizador = 10;                  // Variable con valor de temporizacion
+byte seleccion = 0;                            // Almacena la seleccion realizada
+int temp = 0;                            // Variable temporal para configurar retardo insolacion
+int temporizador = 100;                        // Variable con valor de temporizacion
 int temporizador_cont = 0;                // Variable que muestra el tiempo insolando continuo
-byte pantalla = 0;                        // Pantalla Actual, 0-menu principal;1-temp;2-cont;3-config
-bool msg= false;                          // Variable que muestra el mensaje inicial.
-bool continuo = false;                    // Varible que indica si el modo continuo esta ACTIVADO
-bool temporiz = false;                    // Varible que indica si el modo temporizado esta ACTIVADO
+byte pantalla = 0;        // Pantalla Actual, 0-menu principal;1-temp;2-cont
+bool msg = false;
+bool continuo = false;    // Varible que indica si el modo continuo esta activado
+bool temporiz = false;    // Varible que indica si el modo temporizado esta activado
 //#### FIN VARIABLES ####
-
-//#### INICIO DE CONFIGURACION ####
 void setup()
 {
-  pinMode(led,OUTPUT);                    // Led como salida
-  pinMode(insoladora,OUTPUT);             // Insoladora como salida
+  pinMode(led,OUTPUT);                     // Pin numero 13 como led de estado
   lcd.init();                             // initialize the lcd 
   lcd.init();
-  lcd.backlight();                        
+  lcd.backlight();
   Timer1.initialize(1000000);             // Inicializamos el TIMER1, y lo configuramos para conseguir un segundo
   Timer1.attachInterrupt(temporizacion);  // El desbordamiento del timer lo conectamos con compruebaAlarma()
   Timer1.stop();                          // Paramos el temporizador.
@@ -53,8 +49,9 @@ void setup()
   Serial.println("-Temporizador insoladora V1.0-");
   Serial.println("--------Santiago Lopez-------- ");
   Serial.println("------------------------------");
+  msg = true;                              // Variable que muestra el mensaje de inicio.
 }
-//#### INICIO DE PROGRAMA ####
+
 void loop()
 {
   if (msg){                      // Mostramos el mensaje de inicio.
@@ -80,14 +77,14 @@ void menuPrincipal()
   // Inicializamos las variables
   // Estando en esta pantalla TODO tiene que estar en reposo.
   //temporizador = 5;
-  pantalla = 0;
-  temporizador_cont = temp;
+  temporizador_cont = 0;
   Timer1.stop();
   continuo = false;
   temporiz = false;
   digitalWrite(led,LOW);          // Durante las pruebas.
-  digitalWrite(insoladora,LOW); // Desactivamos la salida de insoladora
-
+  //digitalWrite(insoladora,LOW); // Desactivamos la salida de insoladora
+  //digitalWrite(altavoz,LOW);    // Desactivamos el altavoz
+  pantalla = 0;
   // Mostramos informacion por pantalla
   lcd.setCursor(2,0);
   lcd.print("1 - Temporizacion");
@@ -97,19 +94,10 @@ void menuPrincipal()
   lcd.print("--------------------");
   lcd.setCursor(0,3);
   lcd.print("   1  |   2   |CONF");
-  
-  // Controlamos la pulsacion de los botones
-  estado = digitalRead(botonUno);                             
-  if (estado != ultimoestado && estado==HIGH) seleccion = 1;
-  ultimoestado = estado; 
-  
-  estado = digitalRead(botonDos);   
-  if (estado != ultimoestado && estado==HIGH) seleccion = 2;
-  ultimoestado = estado; 
-  
-  estado = digitalRead(botonTres);    
-  if (estado != ultimoestado && estado==HIGH) seleccion = 3;
-  ultimoestado = estado; 
+  // Controlamos la pulsacion de los botones                             
+  if (botonUno.uniquePress()) seleccion = 1;
+  if (botonDos.uniquePress()) seleccion = 2;
+  if (botonTres.uniquePress()) seleccion = 3;
   
   switch(seleccion)      // Dependiendo del boton pulsado, realizamos una accion u otra. 
   {
@@ -137,13 +125,12 @@ void menuTemp()
   do{
     if (temporizador > 0){
       if (!temporiz){
-      pantalla = 1;
       Timer1.stop(); 
       // Inicializamos variables de la pantalla
       seleccion= 0;
       digitalWrite(led,LOW);  // Durante las pruebas.
-      digitalWrite(insoladora,LOW); // Desactivamos la salida de insoladora
-
+      //digitalWrite(insoladora,LOW); //Activamos la salida de insoladora
+      pantalla = 1;
       // Mostrar informacion por pantalla
       //Serial.println("MENU CONTINUO");
       lcd.setCursor(0,0);
@@ -153,10 +140,10 @@ void menuTemp()
       lcd.setCursor(0,1);
       lcd.print("Tiempo:");
       lcd.setCursor(7,1);
-      if (temporizador >= 0 && temporizador < 10) lcd.print("           ");  
-      if (temporizador >= 10 && temporizador < 100) lcd.print("          ");
-      if (temporizador >= 100 && temporizador < 1000) lcd.print("         ");   
-      if (temporizador >= 1000) lcd.print("        "); 
+    if (temporizador >= 0 && temporizador < 10) lcd.print("           ");  
+    if (temporizador >= 10 && temporizador < 100) lcd.print("          ");
+    if (temporizador >= 100 && temporizador < 1000) lcd.print("         ");   
+    if (temporizador >= 1000) lcd.print("        "); 
       lcd.print(temporizador);
       lcd.setCursor(19,1);
       lcd.print("s");
@@ -164,10 +151,10 @@ void menuTemp()
       lcd.print("--------------------");
       lcd.setCursor(0,3);
       lcd.print("INICIAR|      |ATRAS");
-      // Controlamos la pulsacion de los botones
-      estado = digitalRead(botonUno);   
-      if (estado != ultimoestado && estado==HIGH) seleccion = 1;
-        ultimoestado = estado;
+  // Controlamos la pulsacion de los botones                             
+  if (botonUno.isPressed()) seleccion = 1;
+  if (botonDos.isPressed()) seleccion = 2;
+  if (botonTres.isPressed()) seleccion = 3;
         switch(seleccion)      // Dependiendo del boton pulsado, realizamos una accion u otra. 
         {
           case 1:  seleccion = 0;
@@ -186,10 +173,10 @@ void menuTemp()
         lcd.setCursor(0,1);
         lcd.print("Tiempo:");
         lcd.setCursor(7,1);
-        if (temporizador >= 0 && temporizador < 10) lcd.print("           ");  
-        if (temporizador >= 10 && temporizador < 100) lcd.print("          ");
-        if (temporizador >= 100 && temporizador < 1000) lcd.print("         ");   
-        if (temporizador >= 1000) lcd.print("        "); 
+    if (temporizador >= 0 && temporizador < 10) lcd.print("           ");  
+    if (temporizador >= 10 && temporizador < 100) lcd.print("          ");
+    if (temporizador >= 100 && temporizador < 1000) lcd.print("         ");   
+    if (temporizador >= 1000) lcd.print("        "); 
         lcd.print(temporizador);
         lcd.setCursor(19,1);
         lcd.print("s");
@@ -198,12 +185,12 @@ void menuTemp()
         lcd.setCursor(0,3);
         lcd.print("      | PARAR |ATRAS");
         digitalWrite(led,HIGH);  // Durante las pruebas.
-        digitalWrite(insoladora,HIGH); // Activamos la salida de insoladora
         Timer1.resume(); 
-        // Controlamos la pulsacion de los botones
-        estado = digitalRead(botonDos);
-        if (estado != ultimoestado && estado==HIGH) seleccion = 2;
-        ultimoestado = estado;
+        //digitalWrite(insoladora,HIGH); //Activamos la salida de insoladora
+  // Controlamos la pulsacion de los botones                             
+  if (botonUno.isPressed()) seleccion = 1;
+  if (botonDos.isPressed()) seleccion = 2;
+  if (botonTres.isPressed()) seleccion = 3;
         switch(seleccion)      // Dependiendo del boton pulsado, realizamos una accion u otra. 
           {
           case 2:  seleccion = 0;
@@ -223,12 +210,12 @@ void menuTemp()
        lcd.setCursor(0,3);
        lcd.print("      |       |ATRAS");
        digitalWrite(led,LOW);  // Durante las pruebas.
-       digitalWrite(insoladora,LOW); // Desactivamos la salida de insoladora
        sonido.play(1000,500);
        delay(1000);
-
+       //digitalWrite(insoladora,LOW); //Activamos la salida de insoladora
+       //digitalWrite(altavoz,HIGH);    //Activamos el altavoz
        }    
-  }while((digitalRead(botonTres) != HIGH));
+  }while(botonTres.isPressed() && botonTres.stateChanged());
 }
 void menuCont()
 {
@@ -237,10 +224,9 @@ void menuCont()
     Timer1.stop(); 
     // Inicializamos variables de la pantalla
     seleccion= 0;
-    pantalla = 2;
     digitalWrite(led,LOW);  // Durante las pruebas.
-    digitalWrite(insoladora,LOW); // Desactivamos la salida de insoladora
-
+    //digitalWrite(insoladora,LOW); //Activamos la salida de insoladora
+    pantalla = 2;
     // Mostrar informacion por pantalla
     //Serial.println("MENU CONTINUO");
     lcd.setCursor(0,0);
@@ -262,9 +248,10 @@ void menuCont()
     lcd.setCursor(0,3);
     lcd.print("INICIAR|      |ATRAS");
     // Controlamos la pulsacion de los botones
-    estado = digitalRead(botonUno);   
-    if (estado != ultimoestado && estado==HIGH) seleccion = 1;
-    ultimoestado = estado;
+  // Controlamos la pulsacion de los botones                             
+  if (botonUno.isPressed()) seleccion = 1;
+  if (botonDos.isPressed()) seleccion = 2;
+  if (botonTres.isPressed()) seleccion = 3;
     switch(seleccion)      // Dependiendo del boton pulsado, realizamos una accion u otra. 
     {
       case 1:  seleccion = 0;
@@ -283,10 +270,10 @@ void menuCont()
       lcd.setCursor(0,1);
       lcd.print("Tiempo:");
       lcd.setCursor(7,1);
-      if (temporizador_cont >= 0 && temporizador_cont < 10) lcd.print("           ");  
-      if (temporizador_cont >= 10 && temporizador_cont < 100) lcd.print("          ");
-      if (temporizador_cont >= 100 && temporizador_cont < 1000) lcd.print("         ");   
-      if (temporizador_cont >= 1000) lcd.print("        "); 
+    if (temporizador_cont >= 0 && temporizador_cont < 10) lcd.print("           ");  
+    if (temporizador_cont >= 10 && temporizador_cont < 100) lcd.print("          ");
+    if (temporizador_cont >= 100 && temporizador_cont < 1000) lcd.print("         ");   
+    if (temporizador_cont >= 1000) lcd.print("        "); 
       lcd.print(temporizador_cont);
       lcd.setCursor(19,1);
       lcd.print("s");
@@ -295,13 +282,13 @@ void menuCont()
       lcd.setCursor(0,3);
       lcd.print("      | PARAR |ATRAS");
       digitalWrite(led,HIGH);  // Durante las pruebas.
-      digitalWrite(insoladora,HIGH); //Activamos la salida de insoladora
       Timer1.resume(); 
-      
+      //digitalWrite(insoladora,HIGH); //Activamos la salida de insoladora
       // Controlamos la pulsacion de los botones
-      estado = digitalRead(botonDos);
-      if (estado != ultimoestado && estado==HIGH) seleccion = 2;
-      ultimoestado = estado;
+  // Controlamos la pulsacion de los botones                             
+  if (botonUno.isPressed()) seleccion = 1;
+  if (botonDos.isPressed()) seleccion = 2;
+  if (botonTres.isPressed()) seleccion = 3;
       switch(seleccion)      // Dependiendo del boton pulsado, realizamos una accion u otra. 
         {
         case 2:  seleccion = 0;
@@ -310,7 +297,7 @@ void menuCont()
                  break;
         }
     }
-  }while((digitalRead(botonTres) != HIGH));
+  }while(botonTres.isPressed());
 }
 void menuConfig()
 {
@@ -338,16 +325,10 @@ void menuConfig()
     lcd.print("--------------------");
     lcd.setCursor(0,3);
     lcd.print("  MAS  |MENOS|ATRAS");
-    // Controlamos la pulsacion de los botones
-    estado = digitalRead(botonUno);   
-    if (estado != ultimoestado && estado==HIGH) seleccion = 1;
-    ultimoestado = estado;
-    estado = digitalRead(botonDos);   
-    if (estado != ultimoestado && estado==HIGH) seleccion = 2;
-    ultimoestado = estado;
-    estado = digitalRead(botonTres);   
-    if (estado != ultimoestado && estado==HIGH) seleccion = 3;
-    ultimoestado = estado;
+  // Controlamos la pulsacion de los botones                             
+  if (botonUno.isPressed()) seleccion = 1;
+  if (botonDos.isPressed()) seleccion = 2;
+  if (botonTres.isPressed()) seleccion = 3;
     switch(seleccion)      // Dependiendo del boton pulsado, realizamos una accion u otra. 
     {
       case 1:  seleccion = 0;
@@ -363,7 +344,7 @@ void menuConfig()
                break;
       }
     
-  }while((digitalRead(botonTres) != HIGH));
+  }while(botonTres.isPressed());
 }
 
 

@@ -1,0 +1,3 @@
+- Does DS1307 has calendar capabilities such ignoring "31 Feb" or ignoring/correcting a wrong day of week?
+- Verify if it is really 24-hour
+- Use a structure instead of int array to get/set date/time data?
