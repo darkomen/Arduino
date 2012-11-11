@@ -27,5 +27,6 @@ void loop(){
 	Accionamiento del motor:
 en funcion de la escala del -10 al 10 se con distinta velocidad lineal.
 	*/
-        skybot.mover(10,10);
+	// mover(velocidad_lineal,velocidad_angular)
+        skybot.mover(10,0);
 }
