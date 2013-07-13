@@ -1,0 +1,34 @@
+% Les têtes de chapitre sont définies ainsi
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{20\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        %\huge\bfseries 
+        \scshape
+        \@chapapp\space \thechapter
+        \par\nobreak
+%        \vskip 20\p@
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    \vskip 40\p@
+  }}
+\def\@schapter#1{\if@twocolumn
+                   \@topnewpage[\@makeschapterhead{#1}]%
+                 \else
+                   \@makeschapterhead{#1}%
+                   \@afterheading
+                 \fi}
+\def\@makeschapterhead#1{%
+  \vspace*{20\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \scshape
+    \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    \vskip 40\p@
+  }}

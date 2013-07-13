@@ -1,0 +1,47 @@
+%==============Paquetes==============%
+\usepackage{graphicx}                % Graficos
+\usepackage[spanish]{babel}   		 % Normas tipográficas y opciones del español
+\usepackage{times}          		 % Usar tipo Times-Roman
+\usepackage[T1]{fontenc}      		 % Codificación de salida
+\usepackage[utf8]{inputenc}			 % Codificación de entrada (acentos)
+\usepackage{amsmath} 				 % Paquete matemáticas.
+\usepackage{fancyhdr}				 % Paquete de Estilo de páginas
+\usepackage{ifpdf}					 % Paquete de PDF
+\usepackage{titlesec}				 % Paquete para los títulos y partes de capítulos.
+%====================================%
+%=======Márgenes del documento=======%
+\hoffset = 0pt
+\oddsidemargin = 8pt
+\headheight = 12pt
+\textheight = 609pt
+\marginparsep = 11pt
+\marginparwidth = 54pt
+\footskip = 30pt
+\paperwidth = 579pt
+\topmargin = 0pt
+\headsep = 25pt
+\textwidth = 424pt
+\marginparwidth = 0pt
+\marginparpush = 5pt
+\voffset = 0pt
+\paperheight = 845pt
+%====================================%
+%==========Estilo de página==========%
+\pagestyle{fancy}   				    % seleccionamos un estilo
+% cabecera y pie página 7 de fancyhdr.pdf
+%\fancyhead[RE,LO]{\thepage \rightmark}	% Número de página según pares o impares
+%\fancyfoot[C]{ }                    	% Número de página según pares o impares
+\fancyhead[LE,RO]{\slshape \rightmark} \fancyhead[LO,RE]{\slshape \leftmark} \fancyfoot[C]{\thepage}
+\linespread{1.5}  					    % double spaces lines
+\parindent 1cm                          % Tamaño de la sangria
+\parskip 7.2pt 							% Seperación entre párrafos
+
+%====================================%
+%==========Capítulos==========%
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase
+{\thechapter. #1}}{}}
+% Define comando para colocar páginas en blanco antes de iniciar cada capítulo
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}
+\cleardoublepage}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+%====================================%

@@ -1,0 +1,50 @@
+\chapter{Entradas-Salidas Digitales}
+\section{pinMode(pin, mode)}
+
+Esta instrucción es utilizada en la parte de configuración setup () y sirve para configurar el modo de trabajo de un pin pudiendo ser INPUT (entrada) u OUTPUT (salida).
+\begin{lstlisting}
+pinMode(pin, OUTPUT);     // configura 'pin' como salida
+\end{lstlisting}
+Los terminales de Arduino, por defecto, están configurados como entradas, por lo tanto no es necesario definirlos en el caso de que vayan a trabajar como entradas. Los pines configurados como entrada quedan, bajo el punto de vista eléctrico, como entradas en alta impedancia.\\\\
+Estos pines tienen a nivel interno una resistencia de $20 K \Omega$ a las que se puede acceder mediante software. Estas resistencias se accede de la siguiente manera:
+\begin{lstlisting}
+pinMode(pin, INPUT);         // activa las resistencias internas,
+                             // configurando el pin como entrada
+digitalWrite(pin, HIGH);     // Pone el pin a 1 (pull-up)
+\end{lstlisting}
+Las resistencias internas normalmente se utilizan para conectar las entradas a interruptores. En el ejemplo anterior no se trata de convertir un pin en entrada, es simplemente un método para activar las resistencias internas.\\\\
+Los pins configurado como OUTPUT (salida) se dice que están en un estado de baja impedancia y pueden proporcionar 40 mA (miliamperios) de corriente a otros dispositivos y circuitos. Esta corriente es suficiente para alimentar un diodo LED (no olvidando poner una resistencia en serie), pero no es lo suficiente grande como para alimentar cargas de mayor consumo como relés, solenoides o motores.\\\\
+Un cortocircuito en las patillas Arduino provocará una corriente elevada que puede dañar o destruir el chip ATmega. Puede ser buena idea conectar un pin configurado como salida a un dispositivo externo en serie con una resistencia de $470 \Omega$ o de $1000 \Omega$.
+\section{digitalRead(pin)}
+
+Lee el valor de un pin digital dando un resultado HIGH (alto) o LOW (bajo). El pin se puede especificar ya sea como una variable o una constante (0-13).
+\begin{lstlisting}
+valor = digitalRead(pin);     // hace que 'valor' sea igual al
+                              // estado leido en 'pin'
+
+digitalWrite(pin, value)
+\end{lstlisting}
+Envía al pin definido previamente como OUTPUT el valor HIGH o LOW (poniendo a 1 ó 0 la salida). El pin se puede especificar ya sea como una variable o como una constante (0-13).
+\begin{lstlisting}
+digitalWrite(pin, HIGH);     // deposita en el 'pin' un valor
+                             // HIGH (alto o 1)
+\end{lstlisting}
+El siguiente ejemplo lee el estado de un pulsador conectado a una entrada digital y lo escribe en el pin de salida led:
+\begin{lstlisting}
+int led = 13;        // asigna a LED el valor 13
+int boton = 7;       // asigna a boton el valor 7
+int valor = 0;       // define el valor y le asigna el
+                     // valor 0
+
+void setup()
+{
+pinMode(led, OUTPUT); // configura el led (pin13) como salida
+pinMode(boton, INPUT); // configura boton (pin7) como entrada
+}
+
+void loop()
+{
+valor = digitalRead(boton); //lee el estado de la entrada boton
+digitalWrite(led, valor);   // envia a la salida 'led' el valor leido
+}
+\end{lstlisting}

@@ -1,0 +1,141 @@
+\chapter{Serial}
+\section{Serial.begin(rate)}
+
+Abre el puerto serie y fija la velocidad en baudios para la transmisión de datos en serie. El valor típico de velocidad para comunicarse con el ordenador es 9600, aunque otras velocidades pueden ser soportadas.
+\begin{lstlisting}
+void setup()
+
+{
+Serial.begin(9600);    // abre el Puerto serie
+}    // configurando la velocidad en 9600 bps
+\end{lstlisting}
+\textbf{Nota}: Cuando se utiliza la comunicación serie los pines digitales 0 (RX) y 1 (TX) no pueden utilizarse para otros propósitos.
+\section{Serial.println(data)}
+
+Imprime los datos en el puerto serie, seguido por un retorno de carro y salto de línea. Este comando toma la misma forma que Serial.print (), pero es más fácil para la lectura de los datos en el Monitor Serie del software.
+\begin{lstlisting}
+Serial.println(analogValue);    // envia el valor 'analogValue' al puerto
+\end{lstlisting}
+\textbf{Nota}: Para obtener más información sobre las distintas posibilidades de Serial.println() y Serial.print() puede consultarse el sitio web de Arduino.
+\newpage{}
+El siguiente ejemplo toma de una lectura analógica del pin 0 y envía estos datos al ordenador cada segundo.
+\begin{lstlisting}
+void setup()
+{
+Serial.begin(9600);    // configura el puerto serie a 9600bps
+}
+
+void loop()
+{
+Serial.println(analogRead(0)); // envia valor analogico
+delay(1000);     // espera 1 segundo
+}
+\end{lstlisting}
+
+\section{Serial.println(data, data type)}
+
+Vuelca o envía un número o una cadena de caracteres al puerto serie, seguido de un caracter de retorno de carro 'CR' (ASCII 13, or '$\backslash$r')y un caracter de salto de línea 'LF'(ASCII 10, or '$\backslash$n'). Toma la misma forma que el comando Serial.print()
+\begin{itemize}
+\item Serial.println(b) vuelca o envía el valor de b como un número decimal en caracteres ASCII seguido de 'CR' y 'LF'.
+\item Serial.println(b, DEC) vuelca o envía el valor de b como un número decimal en caracteres ASCII seguido de 'CR' y 'LF'.
+\item Serial.println(b, HEX) vuelca o envía el valor de b como un número hexdecimal en caracteres ASCII seguido de 'CR' y 'LF'.
+\item Serial.println(b, OCT) vuelca o envía el valor de b como un número octal en caracteres ASCII seguido de 'CR' y 'LF'.
+\item Serial.println(b, BIN) vuelca o envía el valor de b como un número binario en caracteres ASCII seguido de 'CR' y 'LF'.
+\item Serial.print(b, BYTE) vuelca o envía el valor de b como un byteseguido de 'CR' y 'LF'.
+\item Serial.println(str) vuelca o envía la cadena de caracteres como una cadena ASCII seguido de 'CR' y 'LF'.
+\item Serial.println() sólo vuelca o envía 'CR' y 'LF'.
+\end{itemize}
+\section{Serial.print(data, data type)}
+
+Vuelca o envía un número o una cadena de carateres, al puerto serie. Dicho comando puede tomar diferentes formas, dependiendo de los parámetros que utilicemos para definir el formato de volcado de los números.
+\subsection{Parámetros}
+\begin{itemize}
+\item data: el número o la cadena de caracteres a volcar o enviar.
+\item data type: determina el formato de salida de los valores numéricos (decimal, octal, binario, etc...) DEC, OCT, BIN, HEX, BYTE.
+\end{itemize}
+\subsection{Ejemplos}
+\textbf{Serial.print(b)}
+Vuelca o envía el valor de b como un número decimal en caracteres ASCII.
+\begin{lstlisting}
+int b = 79; Serial.print(b); // envia "79".
+\end{lstlisting}
+\textbf{Serial.print(b, DEC)}
+Vuelca o envía el valor de b como un número decimal en caracteres ASCII.
+\begin{lstlisting}
+int b = 79;
+Serial.print(b, DEC); // envia "79".
+\end{lstlisting}
+\textbf{Serial.print(b, HEX)}
+Vuelca o envía el valor de b como un número hexdecimal en caracteres ASCII.
+\begin{lstlisting}
+int b = 79;
+Serial.print(b, HEX); // envia "4F".
+\end{lstlisting}
+\textbf{Serial.print(b, OCT)}
+Vuelca o envía el valor de b como un número octal en caracteres ASCII.
+\begin{lstlisting}
+int b = 79;
+Serial.print(b, OCT); // envia "117".
+\end{lstlisting}
+\newpage{}
+\textbf{Serial.print(b, BIN)}
+Vuelca o envía el valor de b como un número binario en caracteres ASCII.
+\begin{lstlisting}
+int b = 79;
+Serial.print(b, BIN); // envia "1001111".
+\end{lstlisting}
+\textbf{Serial.print(b, BYTE)}
+Vuelca o envía el valor de b como un byte.
+\begin{lstlisting}
+int b = 79;
+
+Serial.print(b, BYTE); // Devuelve el caracter 'O', el cual representa el caracter ASCII del valor 79. (Ver tabla ASCII ).
+\end{lstlisting}
+\textbf{Serial.print(str)}
+Vuelca o envía la cadena de caracteres como una cadena ASCII.
+\begin{lstlisting}
+Serial.print("Hello World!"); // envia "Hello World!".
+\end{lstlisting}
+
+\section{Serial.avaible()}
+\begin{lstlisting}
+int Serial.available()
+\end{lstlisting}
+Devuelve un entero con el número de bytes (carácteres) disponibles para leer desde el buffer serie, ó 0 si no hay ninguno. Si hay algún dato disponible, SerialAvailable() será mayor que 0. El buffer serie puede almacenar como máximo 128 bytes.\\
+Ejemplo:
+\begin{lstlisting}
+int incomingByte = 0; // almacena el dato serie
+void setup() {
+Serial.begin(9600); // abre el puerto serie, y le asigna la velocidad de 9600 bps
+}
+void loop() {
+// envia datos solo si los recibe:
+if (Serial.available() > 0) {
+// lee el byte de entrada:
+incomingByte = Serial.read();
+//lo vuelca a pantalla
+Serial.print("He recibido: "); Serial.println(incomingByte, DEC);
+}
+}
+\end{lstlisting}
+\section{Serial.Read()}
+\begin{lstlisting}
+int Serial.Read()
+\end{lstlisting}
+Lee o captura un byte (carácter) desde el puerto serie. Devuelve :El siguiente byte (carácter) desde el puerto serie, ó -1 si no hay ninguno.
+Ejemplo
+\begin{lstlisting}
+int incomingByte = 0; // almacenar el dato serie
+void setup() {
+Serial.begin(9600); // abre el puerto serie,y le asigna la velocidad de 9600 bps
+}
+void loop() {
+// envia datos solo si los recibe:
+if (Serial.available() > 0) {
+// lee el byte de entrada:
+incomingByte = Serial.read();
+//lo vuelca a pantalla
+Serial.print("He recibido: "); Serial.println(incomingByte, DEC);
+}
+}
+\end{lstlisting}

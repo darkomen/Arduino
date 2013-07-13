@@ -1,0 +1,16 @@
+\chapter{Tiempo}
+\section{delay(ms)}
+
+Detiene la ejecución del programa la cantidad de tiempo en milisegundos que se indica en la propia instrucción. De tal manera que 1000 equivale a 1 segundo.
+\begin{lstlisting}
+delay(1000);     // espera 1 segundo
+\end{lstlisting}
+
+\section{millis()}
+
+Devuelve el número de milisegundos transcurrido desde el inicio del programa en Arduino hasta el momento actual. Normalmente será un valor grande (dependiendo del tiempo que este en marcha la aplicación después de cargada o después de la última vez que se pulsó el botón reset de la tarjeta).
+\begin{lstlisting}
+valor = millis();     // valor recoge el numero de
+                      // milisegundos
+\end{lstlisting}
+\textbf{Nota}: Este número se desbordará (si no se resetea de nuevo a cero), después de aproximadamente 49 días.

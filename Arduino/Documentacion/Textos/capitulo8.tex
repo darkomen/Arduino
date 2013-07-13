@@ -1,0 +1,36 @@
+\chapter{Entradas-Salidas Analógicas}
+\section{analogRead(pin)}
+
+Lee el valor de un determinado pin definido como entrada analógica con una resolución de 10 bits. Esta instrucción sólo funciona en los pines (0-5). El rango de valor que podemos leer oscila de 0 a 1023.\\
+\begin{lstlisting}
+valor = analogRead(pin); // asigna a 'valor' lo que lee en la entrada 'pin'
+\end{lstlisting}
+\textbf{Nota}: Los pins analógicos (0-5) a diferencia de los pines digitales, no necesitan ser declarados como INPUT u OUPUT ya que son siempre INPUT.
+\section{analogWrite(pin, value)}
+
+Esta instrucción sirve para escribir un pseudo-valor analógico utilizando el procedimiento de modulación por ancho de pulso (PWM) a uno de los pines de Arduino marcados como PWM. El más reciente Arduino, que implementa el chip ATmega368, permite habilitar como salidas analógicas tipo PWM los pines 3, 5, 6, 9, 10 y 11. Los modelos de Arduino más antiguos que implementan el chip ATmega8, sólo tiene habilitadas para esta función los pines 9, 10 y 11. El valor que se puede enviar a estos pines de salida analógica puede darse en forma de variable o constante, pero siempre con un margen de 0-255.
+\begin{lstlisting}
+analogWrite(pin, valor);    // escribe 'valor' en el 'pin'
+                            // definido como analogico
+\end{lstlisting}
+Si enviamos el valor 0 genera una salida de 0 voltios en el pin especificado; un valor de 255 genera una salida de 5 voltios de salida en el pin especificado. Para valores de entre 0 y 255, el pin saca tensiones entre 0 y 5 voltios - cuanto mayor sea el valor, más a menudo estará a HIGH (5 voltios). Teniendo en cuenta el concepto de señal PWM , por ejemplo, un valor de 64 equivaldrá a mantener 0 voltios de tres cuartas partes del tiempo y 5 voltios a una cuarta parte del tiempo; un valor de 128 equivaldrá a mantener la salida en 0 la mitad del tiempo y 5 voltios la otra mitad del tiempo, y un valor de 192 equivaldrá a mantener en la salida 0 voltios una cuarta parte del tiempo y de 5 voltios de tres cuartas partes del tiempo restante.\\\\
+Debido a que esta es una función de hardware, en el pin de salida analógica (PWM) se generará una onda constante después de ejecutada la instrucción analogWrite hasta que se llegue a ejecutar otra instrucción analogWrite (o una llamada a digitalRead o digitalWrite en el mismo pin).\\\\
+\textbf{Nota}: Las salidas analógicas a diferencia de las digitales, no necesitan ser declaradas como INPUT u OUTPUT.\\\\
+El siguiente ejemplo lee un valor analógico de un pin de entrada analógica, convierte el valor dividiéndolo por 4 y envía el nuevo valor convertido a una salida del tipo PWM o salida analógica:
+\begin{lstlisting}
+int led = 10;      // define el pin 10 como 'led'
+int analog = 0;    // define el pin 0 como 'analog'
+int valor;         // define la variable 'valor'
+
+void setup(){}      // no es necesario configurar
+                    // entradas y salidas
+
+void loop()
+{
+valor = analogRead(analog);     // lee el pin 0 y lo asocia a
+                                // la variable valor
+valor /= 4;                     // divide valor entre 4 y lo
+                                // reasigna a valor
+analogWrite(led, value);        // escribe en el pin 10 'valor'
+}
+\end{lstlisting}

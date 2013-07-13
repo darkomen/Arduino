@@ -1,0 +1,37 @@
+\chapter{Números aleatorios}
+\section{randomSeed(seed)}
+
+Establece un valor, o semilla, como punto de partida para la función random().
+\begin{lstlisting}
+randomSeed(valor);    // hace que 'valor' sea la semilla del
+                      // random
+\end{lstlisting}
+Debido a que Arduino es incapaz de crear un verdadero número aleatorio, randomSeed le permite colocar una variable, constante, u otra función de control dentro de la función random, lo que permite generar números aleatorios al azar. Hay una variedad de semillas, o funciones, que pueden ser utilizados en esta función, incluido millis() o incluso analogRead() que permite leer ruido eléctrico a través de un pin analógico.
+\section{random(max)}
+
+Devuelve un valor aleatorio entre 0 y max.
+\begin{lstlisting}
+  numAleatorio = random(300); // escribe un numero aleatorio de 0 a 300 en la variable 'numAleatorio'
+\end{lstlisting}
+
+\section{random(min, max)}
+
+La función random devuelve un número aleatorio entero de un intervalo de valores especificado entre los valores min y max.
+\begin{lstlisting}
+valor = random(100, 200);    // asigna a la variable 'valor' un numero aleatorio comprendido entre 100 y 200
+\end{lstlisting}
+\textbf{Nota}: Use esta función después de usar el randomSeed().
+El siguiente ejemplo genera un valor aleatorio entre 0 y 255 y lo envía a una salida analógica PWM :
+\begin{lstlisting}              
+int randNumber;   // variable que almacena el valor aleatorio
+int led = 10;     // define led como 10
+
+void setup() {}   // no es necesario configurar nada
+
+void loop() {
+randomSeed(millis());    // genera una semilla para aleatorio a partir de la funcion millis()
+randNumber = random(255);    // genera numero aleatorio entre 0 y 255 
+analogWrite(led, randNumber); // envia a la salida led de tipo PWM el valor 
+delay(500);     // espera 0,5 seg.
+}
+\end{lstlisting}

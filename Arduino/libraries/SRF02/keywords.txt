@@ -1,0 +1,5 @@
+SRF02				KEYWORD1
+update				KEYWORD2
+read				KEYWORD2
+setInterval			KEYWORD2
+configureDeviceId	KEYWORD2

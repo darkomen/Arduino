@@ -1,0 +1,68 @@
+\chapter{Tipos de datos}
+\section{byte}
+
+'Byte' almacena un valor numérico de 8 bits sin decimales. Tienen un rango entre 0 y 255.
+\begin{lstlisting}
+byte unaVariable = 180;     // declara 'unaVariable'
+                            // de tipo byte
+\end{lstlisting}
+\section{int}
+
+'Int' (Enteros) almacena valores numéricos de 16 bits sin decimales comprendidos en el rango 32767 a -32768.
+\begin{lstlisting}
+int unaVariable = 1500;    // declara 'unaVariable' como
+                           // una variable de tipo entero
+\end{lstlisting}
+\textbf{Nota}: Las variables de tipo entero 'int' pueden sobrepasar su valor máximo o mínimo como consecuencia de una operación. Por ejemplo, si x = 32767 y una posterior declaración agrega 1 a x, x = x + 1 entonces el valor se x pasará a ser -32768 (algo así como que el valor da la vuelta).
+\section{long}
+
+'Long' se refiere a números enteros (de 32 bits) sin decimales que se encuentran dentro del rango -2147483648 a 2147483647.
+\begin{lstlisting}
+long unaVariable = 90000;     // declara 'unaVariable'
+                              // de tipo long
+\end{lstlisting}
+\section{float}
+
+'Float' o (“punto flotante”) se aplica a los números con decimales. Los números de punto flotante tienen una mayor resolución que los 'int' (por tratarse de decimales) ocupando también 32 bits con un rango comprendido 3.4028235E +38 a -3.4028235E +38.
+\begin{lstlisting}
+float unaVariable = 3.14;    // declara 'unaVariable'
+                             // de tipo flotante
+\end{lstlisting}
+\textbf{Nota}: Los números de punto flotante no son exactos, y pueden producir resultados extraños en las comparaciones. Los cálculos matemáticos de punto flotante son también mucho más lentos que los del tipo de números enteros, por lo que debe evitarse su uso si es posible.
+\section{Arrays}
+
+Un array es un conjunto de valores a los que se accede con un número índice. Cualquier valor puede ser recogido haciendo uso del nombre de la matriz y el número del índice. El primer valor de la matriz es el que está indicado con el índice 0. Un array tiene que ser declarado y opcionalmente asignados valores a cada posición antes de ser utilizado.
+\begin{lstlisting}
+int miArray[] = {valor0, valor1, valor2...}
+\end{lstlisting}
+Del mismo modo es posible declarar una matriz indicando el tipo de datos y el tamaño y posteriormente, asignar valores a una posición especifica:
+\begin{lstlisting}
+int miArray[5];    // declara un array de enteros de 6
+                   // posiciones
+miArray[3] = 10;     // asigna l valor 10 a la posicion 4
+\end{lstlisting}
+Para leer de un array basta con escribir el nombre y la posición a leer:
+\begin{lstlisting}
+x = miArray[3];    // x ahora es igual a 10 que esta en
+                   // la posicion 3 del array
+\end{lstlisting}
+\textbf{Nota}: Es conveniente siempre inicializar el array con los valores, o bien definir el tamaño, y no dejarlo sólo con el tipo de datos ( int MiArray[];). Las matrices se utilizan a menudo para estamentos de tipo bucle, en los que la variable de incremento del contador del bucle se utiliza como índice o puntero del array. El siguiente ejemplo usa una matriz para el parpadeo de un LED.\\
+\\
+Utilizando un bucle tipo for, el contador comienza en cero y escribe el valor que figura en la posición de índice 0 en la serie que hemos escrito dentro del array parpadeo[], en este caso 180, que se envía a la salida analógica tipo PWM (Modulación por ancho de pulso) configurada en el PIN10, se hace una pausa de 200 ms y a continuación se pasa al siguiente valor que asigna el índice “i”. Con este ejemplo tendremos un LED parpadeando a diferentes velocidades cada 200ms.
+\begin{lstlisting}
+int ledPin = 10;         // LED en el PIN 10
+byte parpadeo[] = {180, 30, 255, 200, 10, 90, 150, 60};   //  array de 8 valores
+void setup()
+{
+  pinMode(ledPin, OUTPUT);     // configura la salida
+}
+
+void loop()            
+{
+  for(int i=0; i<7; i++)    
+  {               
+     analogWrite(ledPin, parpadeo[i]);
+     delay(200); // espera 200ms
+  }
+}
+\end{lstlisting}

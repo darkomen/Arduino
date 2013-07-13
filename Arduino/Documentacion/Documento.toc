@@ -1,0 +1,73 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}Prefacio}{5}
+\contentsline {chapter}{\numberline {2}Estructura de un programa}{6}
+\contentsline {section}{\numberline {2.1}setup()}{7}
+\contentsline {section}{\numberline {2.2}loop()}{7}
+\contentsline {section}{\numberline {2.3}Funciones}{7}
+\contentsline {section}{\numberline {2.4}\{\} entre llaves}{8}
+\contentsline {section}{\numberline {2.5}; punto y coma}{9}
+\contentsline {section}{\numberline {2.6}/*\IeC {\textellipsis } */ bloque de comentarios}{9}
+\contentsline {section}{\numberline {2.7}// l\IeC {\'\i }nea de comentarios}{10}
+\contentsline {chapter}{\numberline {3}Variables}{11}
+\contentsline {section}{\numberline {3.1}Declaraci\IeC {\'o}n de variables}{12}
+\contentsline {section}{\numberline {3.2}Utilizaci\IeC {\'o}n de una variable}{12}
+\contentsline {chapter}{\numberline {4}Tipos de datos}{14}
+\contentsline {section}{\numberline {4.1}byte}{14}
+\contentsline {section}{\numberline {4.2}int}{14}
+\contentsline {section}{\numberline {4.3}long}{14}
+\contentsline {section}{\numberline {4.4}float}{15}
+\contentsline {section}{\numberline {4.5}Arrays}{15}
+\contentsline {chapter}{\numberline {5}Aritm\IeC {\'e}tica}{17}
+\contentsline {section}{\numberline {5.1}Asignaciones compuestas}{18}
+\contentsline {section}{\numberline {5.2}Operadores de comparaci\IeC {\'o}n}{18}
+\contentsline {section}{\numberline {5.3}Operadores l\IeC {\'o}gicos}{19}
+\contentsline {chapter}{\numberline {6}Estructuras de control}{20}
+\contentsline {section}{\numberline {6.1}if (si condicional)}{20}
+\contentsline {section}{\numberline {6.2}if\IeC {\textellipsis } else (si .. sino ..)}{21}
+\contentsline {section}{\numberline {6.3}For}{22}
+\contentsline {section}{\numberline {6.4}while}{22}
+\contentsline {section}{\numberline {6.5}do\IeC {\textellipsis } while}{23}
+\contentsline {chapter}{\numberline {7}Entradas-Salidas Digitales}{24}
+\contentsline {section}{\numberline {7.1}pinMode(pin, mode)}{24}
+\contentsline {section}{\numberline {7.2}digitalRead(pin)}{25}
+\contentsline {chapter}{\numberline {8}Entradas-Salidas Anal\IeC {\'o}gicas}{27}
+\contentsline {section}{\numberline {8.1}analogRead(pin)}{27}
+\contentsline {section}{\numberline {8.2}analogWrite(pin, value)}{27}
+\contentsline {chapter}{\numberline {9}Tiempo}{29}
+\contentsline {section}{\numberline {9.1}delay(ms)}{29}
+\contentsline {section}{\numberline {9.2}millis()}{29}
+\contentsline {chapter}{\numberline {10}Matem\IeC {\'a}tica}{30}
+\contentsline {section}{\numberline {10.1}min(x, y)}{30}
+\contentsline {section}{\numberline {10.2}max(x, y)}{30}
+\contentsline {chapter}{\numberline {11}N\IeC {\'u}meros aleatorios}{31}
+\contentsline {section}{\numberline {11.1}randomSeed(seed)}{31}
+\contentsline {section}{\numberline {11.2}random(max)}{31}
+\contentsline {section}{\numberline {11.3}random(min, max)}{31}
+\contentsline {chapter}{\numberline {12}Serial}{33}
+\contentsline {section}{\numberline {12.1}Serial.begin(rate)}{33}
+\contentsline {section}{\numberline {12.2}Serial.println(data)}{33}
+\contentsline {section}{\numberline {12.3}Serial.println(data, data type)}{34}
+\contentsline {section}{\numberline {12.4}Serial.print(data, data type)}{35}
+\contentsline {subsection}{\numberline {12.4.1}Par\IeC {\'a}metros}{35}
+\contentsline {subsection}{\numberline {12.4.2}Ejemplos}{35}
+\contentsline {section}{\numberline {12.5}Serial.avaible()}{36}
+\contentsline {section}{\numberline {12.6}Serial.Read()}{37}
+\contentsline {chapter}{Appendices}{38}
+\contentsline {chapter}{\numberline {A}Formas de Conexionado de entradas y salidas}{39}
+\contentsline {section}{\numberline {A.1}Salida digital}{39}
+\contentsline {section}{\numberline {A.2}Entrada digital}{40}
+\contentsline {section}{\numberline {A.3}Salida de alta corriente de consumo}{41}
+\contentsline {section}{\numberline {A.4}Salida anal\IeC {\'o}gica del tipo pwm}{42}
+\contentsline {section}{\numberline {A.5}Entrada con potenci\IeC {\'o}metro}{43}
+\contentsline {section}{\numberline {A.6}Entrada conectada a resistencia variable}{44}
+\contentsline {section}{\numberline {A.7}Salida conectada a servo}{45}
+\contentsline {chapter}{\numberline {B}C\IeC {\'o}mo escribir una librer\IeC {\'\i }a para Arduino}{46}
+\contentsline {chapter}{\numberline {C}Se\IeC {\~n}ales anal\IeC {\'o}gicas de salida en Arduino (PWM)}{53}
+\contentsline {chapter}{\numberline {D}Comunicando Arduino con otros sistemas}{57}
+\contentsline {section}{\numberline {D.1}Funciones b\IeC {\'a}sicas}{57}
+\contentsline {section}{\numberline {D.2}Series de pulsos}{58}
+\contentsline {section}{\numberline {D.3}Un ejemplo sencillo}{59}
+\contentsline {section}{\numberline {D.4}Comunicaci\IeC {\'o}n v\IeC {\'\i }a puerto Serie:}{61}
+\contentsline {section}{\numberline {D.5}Env\IeC {\'\i }o de datos desde Arduino(Arduino->PC) al PC por puerto de comunicaci\IeC {\'o}n serie:}{63}
+\contentsline {chapter}{\numberline {E}Env\IeC {\'\i }o de datos desde el PC (PC->Arduino) a Arduino por puerto de comunicaci\IeC {\'o}n serie}{66}
+\contentsline {section}{\numberline {E.1}Env\IeC {\'\i }o a petici\IeC {\'o}n (toma y dame)}{67}

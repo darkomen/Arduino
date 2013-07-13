@@ -1,0 +1,189 @@
+\chapter{Cómo escribir una librería para Arduino}
+
+Este documento explica cómo crear una librería para Arduino. Se comienza con un programa que realiza, mediante encendido y apagado de un led, el código morse y se explica cómo convertir este en una función de librería. Esto permite a otras personas utilizar fácilmente el código que has escrito cargándolo de una forma sencilla.\\\\
+Se comienza con el programa de un sencillo código Morse: La palabra a generar es SOS (. . . - - - . . . ).
+\begin{lstlisting}
+// Genera SOS en codigo Morse luminoso
+
+int pin = 13;
+
+void setup()
+{
+   pinMode(pin, OUTPUT);
+}
+
+void loop() //Programa principal que genera '. . .', '- - -' y '. . .'
+{
+   dot(); dot(); dot(); //Genera la S (. . .)
+   dash(); dash(); dash(); // Genera la O (- - -)
+   dot(); dot(); dot(); // Genera la S (. . .)
+   delay(3000); //Espera un tiempo
+}
+
+void dot() //Procedimiento para generar un punto
+{
+   digitalWrite(pin, HIGH);
+   delay(250);
+   digitalWrite(pin, LOW);
+   delay(250);
+}
+
+void dash()     //Procedimiento para generar una raya
+{
+   digitalWrite(pin, HIGH);
+   delay(1000);
+   digitalWrite(pin, LOW);
+   delay(250);
+}
+\end{lstlisting}
+Si se ejecuta este programa, se ejecuta el código SOS (llamada de solicitud de auxilio) en el pin 13.\\
+El programa tiene distintas partes que tendremos que poner en nuestra librería. En primer lugar, por supuesto, tenemos las funciones dot() (punto) y dash() (raya) que se encargar de que el led parpadee de manera corta o larga respectivamente. En segundo lugar, tenemos la línea ledPin que utilizamos para determinar el pin a utilizar. Por último, está la llamada a la función pinMode() que inicializa el pin como salida.\\
+Vamos a empezar a convertir el programa en una librería.\\
+Necesitas por lo menos dos archivos en una librería: un archivo de cabecera (con la extensión .h) y el archivo fuente (con la extensión .cpp). El fichero de cabecera tiene definiciones para la librería: básicamente una lista de todo lo que contiene, mientras que el archivo fuente tiene el código real. Vamos a llamar a nuestra biblioteca 'Morse', por lo que nuestro fichero de cabecera se Morse.h. Echemos un vistazo a lo que sucede en ella. Puede parecer un poco extraño al principio, pero lo entenderá una vez que vea el archivo de origen que va con ella.\\
+El núcleo del archivo de cabecera consiste en una línea para cada función en la biblioteca, envuelto en una clase junto con las variables que usted necesita:
+\begin{lstlisting}
+class Morse
+{
+   public: Morse(int pin);
+   void dot();
+   void dash();
+private:
+   int _pin;
+};
+\end{lstlisting}
+Una clase es simplemente una colección de funciones y variables que se mantienen unidos todos en un solo lugar. Estas funciones y variables pueden ser públicos, lo que significa que puede ser utilizadas por quienes utilizan la librería, o privadas, lo que significa que sólo se puede acceder desde dentro de la propia clase. Cada clase tiene una función especial conocida como un constructor, que se utiliza para crear una instancia de la clase. El constructor tiene el mismo nombre que la clase, y no devuelve nada.\\
+Usted necesita dos cosas más en el fichero de cabecera. Uno de ellos es un \#include, declaración que le da acceso a los tipos estándar y las constantes del lenguaje de Arduino (esto se añade automáticamente en todos los programas que hacemos con Arduino, pero no a las librerías), por lo que debemos incluirlas (poniéndolas por encima de la definición de clase dada anteriormente):
+\begin{lstlisting}
+#include "WConstants.h"
+\end{lstlisting}
+Por último, se colocara delante del código la cabecera siguiente:
+\begin{lstlisting}
+#ifndef Morse_h
+#define Morse_h
+// el estamento #include y el resto del codigo va aqui..
+#endif
+\end{lstlisting}
+Básicamente, esto evita problemas si alguien accidentalmente pone \#include en la librería dos veces.\\
+Por último, por lo general, se pone un comentario en la parte superior de la librería con su nombre, una breve descripción de lo que hace, quien la escribió, la fecha y la licencia.
+Echemos un vistazo a la cabecera completa disposición del fichero de cabecera h:\\
+
+\textbf{Fichero Morse.h}
+\begin{lstlisting}
+/*
+Morse.h - Library for flashing Morse code.
+Created by David A. Mellis, November 2, 2007. Released into the public domain.
+*/
+#ifndef Morse_h
+#define Morse_h
+#include "WConstants.h"
+
+class Morse
+{
+   public: Morse(int pin); void dot();
+   void dash();
+   private:
+   int _pin;
+};
+
+#endif
+\end{lstlisting}
+Ahora vamos a escribir las diversas partes del archivo fuente de la librería, Morse.cpp.
+Primero se ponen un par de declaraciones mediante \#include. Estas incluyen resto del código de acceso a las funciones estándar de Arduino, ya que en las definiciones figuran en el archivo de cabecera:
+\begin{lstlisting}
+#include "WProgram.h"
+#include "Morse.h"
+\end{lstlisting}
+Luego viene el constructor. Ahora se indicará lo que debería suceder cuando alguien crea una instancia a la clase. En este caso, el usuario especifica el pin que les gustaría utilizar. Configuramos el pin como salida guardarlo en una variable privada para su uso en las otras funciones:
+\begin{lstlisting}
+Morse::Morse(int pin)
+{
+   pinMode(pin, OUTPUT);
+   _pin = pin;
+}
+\end{lstlisting}
+Hay un par de cosas extrañas en este código. El primero es el Morse:: antes del nombre de la función. Esto indica que la función es parte de la clase Morse. Verá este de nuevo en las otras funciones en la clase. La segunda cosa inusual es el guión bajo en el nombre de nuestra variable privada, \_pin. Esta variable puede tener cualquier nombre que desee, siempre y cuando coincida con la definición que figura en el fichero de cabecera. La adición de un guión bajo al comienzo del nombre es una convención para dejar claro que las variables son privadas, y también a distinguir el nombre de la del argumento a la función (pin en este caso).\\
+Después viene el código del programa que queremos convertir en una función (¡por fin!). Parece casi igual, excepto con Morse:: delante de los nombres de las funciones, y \_pin en lugar de pin:
+
+\begin{lstlisting}
+void Morse::dot()
+{
+   digitalWrite(_pin, HIGH); delay(250);
+   digitalWrite(_pin, LOW); delay(250);
+}
+
+void Morse::dash()
+{
+   digitalWrite(_pin, HIGH); delay(1000);
+   digitalWrite(_pin, LOW); delay(250);
+}
+\end{lstlisting}
+Por último, es típico incluir el comentario de cabecera en la parte superior de la fuente así como el archivo. Vamos a ver el fichero completo:\\
+\textbf{Fichero Morse.cpp}
+\begin{lstlisting}
+/*
+Morse.cpp - Library for flashing Morse code. Created by David A. Mellis, November 2, 2007. Released into the public domain.
+*/
+
+#include "WProgram.h"
+#include "Morse.h"
+
+Morse::Morse(int pin)
+{
+   pinMode(pin, OUTPUT);
+   _pin = pin;
+}
+
+void Morse::dot()
+{
+   digitalWrite(_pin, HIGH); delay(250);
+   digitalWrite(_pin, LOW); delay(250);
+}
+
+void Morse::dash()
+{
+   digitalWrite(_pin, HIGH); delay(1000);
+   digitalWrite(_pin, LOW); delay(250);
+}
+\end{lstlisting}
+Y eso es todo lo que necesita (hay algunas otras cosas opcionales, pero vamos a hablar de eso más adelante).\\
+Ahora vamos a ver cómo se utiliza la librería.\\
+En primer lugar, debemos crear una carpeta llamada Morse dentro del subdirectorio libraries de la aplicación Arduino. Copiar o mover los archivos Morse.h y Morse.cpp en esa carpeta. Ahora lanzar la aplicación Arduino. Si abres el menú Sketch> Import Library, deberás ver el objeto Morse. Si realiazs alguna modificación en la libería, deberás reiniciar el entorno de Arduino para así recompilarla. Si aparece algún fallo relacionado con la compilación de la biblioteca, asegúrese de que están realmente los archivos .cpp y .h (sin extensión adicional .pde o .txt, por ejemplo).\\
+Veamos como podemos escribir nuestro nuevo programa SOS haciendo uso de la nueva librería:\\
+\textbf{Programa para Arduino}
+\begin{lstlisting}
+#include <Morse.h>
+
+Morse morse(13);
+
+void setup() {}
+
+void loop()
+{
+   morse.dot(); morse.dot(); morse.dot();
+   morse.dash(); morse.dash(); morse.dash();
+   morse.dot(); morse.dot(); morse.dot();
+   delay(3000);
+}
+\end{lstlisting}
+Hay algunas diferencias con respecto al antiguo programa (además del hecho de que algunos de los códigos se han incorporado a la librería).\\
+En primer lugar, hemos añadido un estamento \#include en la parte superior del programa. Esto hace que la librería Morse quede a disposición del programa y la incluye en el código. Esto significa que ya no necesitan una librería en el programa, usted debe borrar el \#include para ahorrar espacio.\\
+En segundo lugar, nosotros ahora podemos crear una instancia de la clase Morse llamado morse:
+\begin{lstlisting}
+Morse morse(13);
+\end{lstlisting}
+Cuando esta línea se ejecuta (que en realidad sucede antes incluso de setup()), el constructor de la clase Morse será invocado y le pasara el argumento que se ha dado aquí (en este caso, sólo 13).\\
+Tenga en cuenta que nuestra parte setup() del programa está vacía, porque la llamada a pinMode() se lleva a cabo en el interior de la librería (cuando la instancia se construye).
+Por último, para llamar a las funciones punto \mbox{dot()} y raya \mbox{dash()}, es necesario colocar el prefijo morse. – delante de la instancia que queremos usar. Podríamos tener varias instancias de la clase Morse, cada uno en su propio pin almacenados en la variable privada \_pin de esa instancia. Al llamar una función en un caso particular, especificaremos qué variables del ejemplo debe utilizarse durante esa llamada a una función. Es decir, si hemos escrito:
+\begin{lstlisting}
+Morse morse(13);
+Morse morse2(12);
+\end{lstlisting}
+entonces dentro de una llamada a morse2.dot(), \_pin sería 12.\\
+Si ha escrito el nuevo programa, probablemente se habrá dado cuenta de que ninguna de nuestras funciones de la librería fue reconocida por el entorno de Arduino destacando su color. Por desgracia, el software de Arduino no puede averiguar automáticamente lo que se ha definido en su librería (a pesar de que sería una característica interesante), por lo que tiene que darle un poco de ayuda. Para hacer esto, cree un archivo llamado keywords.txt en el directorio Morse. Debe tener este aspecto:
+\begin{lstlisting}
+Morse    KEYWORD1
+dash     KEYWORD2
+dot      KEYWORD2
+\end{lstlisting}
+Cada línea tiene el nombre de la palabra clave, seguida de un tabulador (sin espacios), seguido por el tipo de palabra clave. Las clases deben ser KEYWORD1 y son de color naranja; las funciones deben ser KEYWORD2 y serán de color marrón. Tendrás que reiniciar el entorno Arduino para conseguir reconocer las nuevas palabras clave.\\
+Es interesante que quienes utilicen la libreria Morse tengan algún ejemplo guardado y que aparezca en el IDE de Arduino cuando seleccionamos dentro de la carpeta ejemplos (Sketch). Para hacer esto, se crea una carpeta de ejemplos dentro de la carpeta que contiene la librería Morse. A continuación, movemos o copiamos el directorio que contiene el programa (lo llamaremos SOS) que hemos escrito anteriormente en el directorio de ejemplos. (Usted puede encontrar el ejemplo mediante el menú Sketch $\to$ Show Sketch Folder). Si reiniciamos el entorno de Arduino veremos un elemento Library\_Morse dentro del menú File $\to$ Sketchbook $\to$ Examples que contiene su ejemplo. Es posible que desee añadir algunos comentarios que explicar mejor cómo utilizar la biblioteca.

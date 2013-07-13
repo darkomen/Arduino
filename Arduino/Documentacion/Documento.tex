@@ -1,0 +1,57 @@
+%==========Tipo de documento=========%
+\documentclass[12pt,a4paper,twoside]{report}
+%====================================%
+\usepackage{appendix}
+\usepackage{makeidx}
+\makeindex
+%====Fichero con configuraciónes%====%
+\input{./Configuracion/libro.tex} 
+%====================================%
+%\setlength{\baselineskip}{40.0pt}    % 16 pt usual spacing between lines
+%\setlength{\parskip}{3pt plus 2pt}
+%\setlength{\parindent}{20pt}
+%\setlength{\oddsidemargin}{0.5cm}
+%\setlength{\evensidemargin}{0.5cm}
+%\setlength{\marginparsep}{0.75cm}
+%\setlength{\marginparwidth}{2.5cm}
+%\setlength{\marginparpush}{1.0cm}
+%\setlength{\textwidth}{150mm}
+
+
+%==============Documento=============%
+%============Info documento==========%
+ \title{}							 % Título del documento
+ \author{Santiago López}		 				     % Autor del documento
+ \date{\today}						 % Fecha del documento	
+%%===================================%
+
+
+
+\begin{document}
+	\input{./Portada/portada.tex}
+	\tableofcontents{}
+	\input{./Textos/capitulo1.tex}
+	\input{./Textos/capitulo2.tex}
+	\input{./Textos/capitulo3.tex}
+	\input{./Textos/capitulo4.tex}	
+	\input{./Textos/capitulo5.tex}	
+	\input{./Textos/capitulo6.tex}	
+	\input{./Textos/capitulo7.tex}	
+	\input{./Textos/capitulo8.tex}	
+	\input{./Textos/capitulo9.tex}
+	\input{./Textos/capitulo10.tex}
+	\input{./Textos/capitulo11.tex}
+	\input{./Textos/capitulo12.tex}
+	\appendix
+	\clearpage % o \cleardoublepage
+	\addappheadtotoc
+	\appendixpage
+	\input{./Textos/capitulo13.tex}
+	\input{./Textos/capitulo14.tex}
+	\input{./Textos/capitulo15.tex}
+	\input{./Textos/capitulo16.tex}
+	\input{./Textos/capitulo17.tex}
+	\listoffigures
+	\printindex
+\end{document}
+%====================================%
